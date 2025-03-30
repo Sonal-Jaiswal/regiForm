@@ -251,7 +251,7 @@ const RegistrationForm = ({ onRegistrationComplete }: { onRegistrationComplete: 
       <CardHeader className="space-y-1 pb-6 border-b border-muted flex flex-col items-center">
         <div className="w-16 h-16 mb-2">
           <img 
-            src="/lovable-uploads/2a5b9d6d-fbd8-4e4a-ab5b-1f4f6c6bfffe.png" 
+            src="gfgKIIT.png" 
             alt="GFG KIIT Logo" 
             className="w-full h-full object-contain"
           />

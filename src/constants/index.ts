@@ -1,4 +1,3 @@
-
 import { Branch } from '@/types';
 
 export const BRANCHES: Branch[] = [
