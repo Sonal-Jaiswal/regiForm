@@ -16,4 +16,4 @@ export const BRANCHES: Branch[] = [
 ];
 
 export const MAX_TEAM_MEMBERS = 3;
-export const SHEETS_URL = "https://script.google.com/macros/s/AKfycbxnrv1VIaUzOPFJxJ9iMnuHMuxJD9FqOdCsTJ3qQHkDyRH5DWEJPqXCPzUAz6GQIYp4/exec";
+export const SHEETS_URL = "https://script.google.com/a/macros/kiit.ac.in/s/AKfycbzlzFxUp-Km620UMX93Yk-fRwdxmpr8ait7fi2eFzbMZ5w0DQfNS_jzVb5q51iAxOU1/exec";

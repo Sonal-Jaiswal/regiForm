@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -47,7 +46,6 @@ const RegistrationForm = ({ onRegistrationComplete }: { onRegistrationComplete: 
       const newMembers = [...registrationData.members];
       newMembers.splice(index, 1);
       
-      // If we're removing the team lead, set the first member as team lead
       if (registrationData.members[index].isTeamLead && newMembers.length > 0) {
         newMembers[0].isTeamLead = true;
       }
@@ -67,7 +65,6 @@ const RegistrationForm = ({ onRegistrationComplete }: { onRegistrationComplete: 
     } else if (field === 'isTeamLead') {
       newMembers[index][field] = value === 'true';
     } else {
-      // For all other string fields (fullName, rollNo, email, branch)
       newMembers[index][field] = value;
     }
     
@@ -90,7 +87,6 @@ const RegistrationForm = ({ onRegistrationComplete }: { onRegistrationComplete: 
   };
 
   const validateForm = (): boolean => {
-    // Check team name
     if (!registrationData.teamName.trim()) {
       toast({
         title: "Team name required",
@@ -100,7 +96,6 @@ const RegistrationForm = ({ onRegistrationComplete }: { onRegistrationComplete: 
       return false;
     }
 
-    // Check each member's details
     for (let i = 0; i < registrationData.members.length; i++) {
       const member = registrationData.members[i];
       if (!member.fullName.trim()) {
@@ -140,7 +135,6 @@ const RegistrationForm = ({ onRegistrationComplete }: { onRegistrationComplete: 
       }
     }
     
-    // Check if there's a team lead
     if (!registrationData.members.some(member => member.isTeamLead)) {
       toast({
         title: "Team lead required",
@@ -161,7 +155,6 @@ const RegistrationForm = ({ onRegistrationComplete }: { onRegistrationComplete: 
     setIsSubmitting(true);
     
     try {
-      // Send data to Google Sheets
       const formData = new FormData();
       formData.append('teamName', registrationData.teamName);
       
@@ -174,29 +167,33 @@ const RegistrationForm = ({ onRegistrationComplete }: { onRegistrationComplete: 
         formData.append(`member${index+1}IsTeamLead`, member.isTeamLead ? 'Yes' : 'No');
       });
       
-      console.log("Sending data to Google Sheets:", formData);
+      console.log("Sending data to Google Sheets:", Object.fromEntries(formData));
       
-      // Submit to Google Sheets
       try {
         const response = await fetch(SHEETS_URL, {
           method: 'POST',
           body: formData,
           mode: 'no-cors'
         });
-        console.log("Form submission attempted", response);
+        
+        console.log("Form submission response:", response);
+        
+        toast({
+          title: "Registration successful!",
+          description: "Your team has been registered for the event.",
+          duration: 5000
+        });
+        
+        onRegistrationComplete(registrationData);
+        
       } catch (error) {
         console.error("Error submitting to Google Sheets:", error);
-        // We'll still continue with the registration flow despite Google Sheets error
+        toast({
+          title: "Submission error",
+          description: "There was an issue submitting to Google Sheets. Please try again.",
+          variant: "destructive"
+        });
       }
-      
-      toast({
-        title: "Registration successful!",
-        description: "Your team has been registered for the event.",
-        duration: 5000
-      });
-      
-      // Call the callback to show ID cards
-      onRegistrationComplete(registrationData);
       
     } catch (error) {
       console.error("Registration error:", error);
