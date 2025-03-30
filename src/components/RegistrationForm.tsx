@@ -64,9 +64,10 @@ const RegistrationForm = ({ onRegistrationComplete }: { onRegistrationComplete: 
     
     if (field === 'gender') {
       newMembers[index][field] = value as Gender;
-    } else if (field === 'branch') {
-      newMembers[index][field] = value;
+    } else if (field === 'isTeamLead') {
+      newMembers[index][field] = value === 'true';
     } else {
+      // For all other string fields (fullName, rollNo, email, branch)
       newMembers[index][field] = value;
     }
     
@@ -173,9 +174,9 @@ const RegistrationForm = ({ onRegistrationComplete }: { onRegistrationComplete: 
         formData.append(`member${index+1}IsTeamLead`, member.isTeamLead ? 'Yes' : 'No');
       });
       
-      // Try to submit to Google Sheets
-      // Note: In a real implementation, you would need to set up a Google Apps Script
-      // to process this data and write to Google Sheets
+      console.log("Sending data to Google Sheets:", formData);
+      
+      // Submit to Google Sheets
       try {
         const response = await fetch(SHEETS_URL, {
           method: 'POST',
