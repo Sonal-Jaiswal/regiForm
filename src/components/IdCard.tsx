@@ -3,6 +3,7 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { TeamMember } from '@/types';
 import { BadgeCheck } from 'lucide-react';
+import { BRANCHES } from '@/constants';
 
 interface IdCardProps {
   member: TeamMember;

@@ -64,6 +64,8 @@ const RegistrationForm = ({ onRegistrationComplete }: { onRegistrationComplete: 
     
     if (field === 'gender') {
       newMembers[index][field] = value as Gender;
+    } else if (field === 'branch') {
+      newMembers[index][field] = value;
     } else {
       newMembers[index][field] = value;
     }
