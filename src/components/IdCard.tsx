@@ -14,16 +14,27 @@ const IdCard: React.FC<IdCardProps> = ({ member, teamName }) => {
   // Select the appropriate spider image based on gender
   const getCharacterImage = () => {
     if (member.gender === 'female') {
-      return '/lovable-uploads/7e5cef25-4d0d-4daa-a8ae-e4fe1701e62d.png';
+      return '/lovable-uploads/1d476e35-1558-4bac-bd0d-4a9d8be955e1.png';
+    } else if (member.gender === 'male') {
+      return '/lovable-uploads/2b2d6e50-4ce6-49d6-ad8d-c5391fdbdd64.png';
     } else {
-      return '/lovable-uploads/d9f88e6a-8984-4fa5-afd1-6e22eaf1c01c.png';
+      // For 'other' gender
+      return '/lovable-uploads/d9f88e6a-8984-4fa5-afd1-6e22eaf1c01c.png'; // This is a placeholder for 404 image
     }
   };
 
   return (
     <Card className="w-full max-w-md mx-auto overflow-hidden card-glow animate-pulse-glow bg-card">
-      <div className="bg-muted p-2 border-b border-border">
-        <h2 className="text-xl font-bold text-center text-primary trapped-glow">TRAPPED: Dare to Escape</h2>
+      <div className="bg-muted p-2 border-b border-border flex justify-between items-center">
+        <div className="w-10 h-10">
+          <img 
+            src="/lovable-uploads/2a5b9d6d-fbd8-4e4a-ab5b-1f4f6c6bfffe.png" 
+            alt="GFG KIIT Logo" 
+            className="w-full h-full object-contain"
+          />
+        </div>
+        <h2 className="text-xl font-bold text-center text-primary trapped-glow flex-1">TRAPPED: Dare to Escape</h2>
+        <div className="w-10 h-10"></div> {/* Empty div for balanced layout */}
       </div>
       
       <div className="p-1 bg-primary/10 text-center">

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -209,7 +210,14 @@ const RegistrationForm = ({ onRegistrationComplete }: { onRegistrationComplete: 
 
   return (
     <Card className="w-full max-w-3xl mx-auto card-glow animate-pulse-glow">
-      <CardHeader className="space-y-1 pb-6 border-b border-muted">
+      <CardHeader className="space-y-1 pb-6 border-b border-muted flex flex-col items-center">
+        <div className="w-16 h-16 mb-2">
+          <img 
+            src="/lovable-uploads/2a5b9d6d-fbd8-4e4a-ab5b-1f4f6c6bfffe.png" 
+            alt="GFG KIIT Logo" 
+            className="w-full h-full object-contain"
+          />
+        </div>
         <CardTitle className="text-3xl font-bold text-center text-primary trapped-glow">
           TRAPPED: Dare to Escape
         </CardTitle>

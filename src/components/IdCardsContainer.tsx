@@ -20,7 +20,14 @@ const IdCardsContainer: React.FC<IdCardsContainerProps> = ({ data, onBack }) => 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
       <Card className="card-glow animate-pulse-glow">
-        <CardHeader className="text-center">
+        <CardHeader className="text-center flex flex-col items-center">
+          <div className="w-16 h-16 mb-2">
+            <img 
+              src="/lovable-uploads/2a5b9d6d-fbd8-4e4a-ab5b-1f4f6c6bfffe.png" 
+              alt="GFG KIIT Logo" 
+              className="w-full h-full object-contain"
+            />
+          </div>
           <CardTitle className="text-3xl font-bold text-primary trapped-glow">Your ID Cards</CardTitle>
           <CardDescription className="text-lg">
             Your team has been successfully registered for TRAPPED: Dare to Escape!
