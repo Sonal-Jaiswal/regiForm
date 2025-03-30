@@ -160,15 +160,38 @@ const RegistrationForm = ({ onRegistrationComplete }: { onRegistrationComplete: 
       formData.append('teamName', registrationData.teamName);
       
       registrationData.members.forEach((member, index) => {
-        formData.append(`member${index+1}Name`, member.fullName);
-        formData.append(`member${index+1}RollNo`, member.rollNo);
-        formData.append(`member${index+1}Email`, member.email);
-        formData.append(`member${index+1}Branch`, member.branch);
-        formData.append(`member${index+1}Gender`, member.gender);
-        formData.append(`member${index+1}IsTeamLead`, member.isTeamLead ? 'Yes' : 'No');
+        formData.append(`member[${index+1}]Name`, member.fullName);
+        formData.append(`member[${index+1}]RollNo`, member.rollNo);
+        formData.append(`member[${index+1}]Email`, member.email);
+        formData.append(`member[${index+1}]Branch`, member.branch);
+        formData.append(`member[${index+1}]Gender`, member.gender);
+        formData.append(`member[${index+1}]IsTeamLead`, member.isTeamLead ? 'Yes' : 'No');
       });
       
       console.log("Sending data to Google Sheets:", Object.fromEntries(formData));
+
+      const response = await fetch(
+        `https://script.google.com/macros/s/${import.meta.env.VITE_Sheet}/exec`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        toast({
+          title: "Registration note",
+          description: "Your registration was processed, but we couldn't verify with Google Sheets",
+          duration: 5000
+        });
+      }
+      else{
+        toast({
+          title: "Registration successful!",
+          description: "Your team has been registered for the event.",
+          duration: 5000
+        });
+      }
       
       // Use JSONP approach for Google Sheets
       const jsonpCallback = `callback_${Date.now()}`;
@@ -183,19 +206,19 @@ const RegistrationForm = ({ onRegistrationComplete }: { onRegistrationComplete: 
         delete (window as any)[jsonpCallback];
         
         if (response && response.result === 'success') {
-          toast({
-            title: "Registration successful!",
-            description: "Your team has been registered for the event.",
-            duration: 5000
-          });
+          // toast({
+          //   title: "Registration successful!",
+          //   description: "Your team has been registered for the event.",
+          //   duration: 5000
+          // });
           
           onRegistrationComplete(registrationData);
         } else {
-          toast({
-            title: "Registration note",
-            description: "Your registration was processed, but we couldn't verify with Google Sheets. Your ID cards are still generated.",
-            duration: 5000
-          });
+          // toast({
+          //   title: "Registration note",
+          //   description: "Your registration was processed, but we couldn't verify with Google Sheets. Your ID cards are still generated.",
+          //   duration: 5000
+          // });
           
           // Still proceed with registration to show ID cards
           onRegistrationComplete(registrationData);
@@ -234,8 +257,8 @@ const RegistrationForm = ({ onRegistrationComplete }: { onRegistrationComplete: 
     } catch (error) {
       console.error("Registration error:", error);
       toast({
-        title: "Registration processed",
-        description: "We encountered an issue with Google Sheets, but your ID cards have been generated.",
+        title: "Submission Form Error",
+        description: "We encountered an issue with Google Sheets",
         variant: "destructive"
       });
       
