@@ -193,27 +193,52 @@ const RegistrationForm = ({ onRegistrationComplete }: { onRegistrationComplete: 
         });
       }
       
-      // Use JSONP approach for Google Sheets
-      const jsonpCallback = `callback_${Date.now()}`;
-      const script = document.createElement('script');
+      // // Use JSONP approach for Google Sheets
+      // const jsonpCallback = `callback_${Date.now()}`;
+      // const script = document.createElement('script');
       
-      // Create a global callback function
-      (window as any)[jsonpCallback] = function(response: any) {
-        console.log("Google Sheets response:", response);
+      // // Create a global callback function
+      // (window as any)[jsonpCallback] = function(response: any) {
+      //   console.log("Google Sheets response:", response);
         
         // Clean up
-        document.body.removeChild(script);
-        delete (window as any)[jsonpCallback];
+        // document.body.removeChild(script);
+        // delete (window as any)[jsonpCallback];
+
+        try {
+          const response = await fetch(SHEETS_URL, {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors'
+          });
+          
+          console.log("Form submission response:", response);
+          
+          toast({
+            title: "Registration successful!",
+            description: "Your team has been registered for the event.",
+            duration: 5000
+          });
+
+          onRegistrationComplete(registrationData);
+
+        } catch (error) {
+          console.error("Error submitting to Google Sheets:", error);
+          toast({
+            title: "Submission error",
+            description: "There was an issue submitting to Google Sheets. Please try again.",
+            variant: "destructive"
+          });
         
-        if (response && response.result === 'success') {
+        // if (response && response.result === 'success') {
           // toast({
           //   title: "Registration successful!",
           //   description: "Your team has been registered for the event.",
           //   duration: 5000
           // });
           
-          onRegistrationComplete(registrationData);
-        } else {
+        //   onRegistrationComplete(registrationData);
+        // } else {
           // toast({
           //   title: "Registration note",
           //   description: "Your registration was processed, but we couldn't verify with Google Sheets. Your ID cards are still generated.",
@@ -221,38 +246,38 @@ const RegistrationForm = ({ onRegistrationComplete }: { onRegistrationComplete: 
           // });
           
           // Still proceed with registration to show ID cards
-          onRegistrationComplete(registrationData);
-        }
-      };
+      //     onRegistrationComplete(registrationData);
+      //   }
+      // };
       
       // Build query string from FormData
-      const params = new URLSearchParams();
-      for (const [key, value] of formData.entries()) {
-        params.append(key, value.toString());
+      // const params = new URLSearchParams();
+      // for (const [key, value] of formData.entries()) {
+      //   params.append(key, value.toString());
       }
-      params.append('callback', jsonpCallback);
+    //   params.append('callback', jsonpCallback);
       
-      // Create and append script
-      script.src = `${SHEETS_URL}?${params.toString()}`;
-      document.body.appendChild(script);
+    //   // Create and append script
+    //   script.src = `${SHEETS_URL}?${params.toString()}`;
+    //   document.body.appendChild(script);
       
-      // Set a fallback timeout
-      setTimeout(() => {
-        if ((window as any)[jsonpCallback]) {
-          // Clean up if callback wasn't triggered
-          document.body.removeChild(script);
-          delete (window as any)[jsonpCallback];
+    //   // Set a fallback timeout
+    //   setTimeout(() => {
+    //     if ((window as any)[jsonpCallback]) {
+    //       // Clean up if callback wasn't triggered
+    //       document.body.removeChild(script);
+    //       delete (window as any)[jsonpCallback];
           
-          toast({
-            title: "Registration complete",
-            description: "Your ID cards have been generated.",
-            duration: 5000
-          });
+    //       toast({
+    //         title: "Registration complete",
+    //         description: "Your ID cards have been generated.",
+    //         duration: 5000
+    //       });
           
-          // Still proceed with registration to show ID cards
-          onRegistrationComplete(registrationData);
-        }
-      }, 5000);
+    //       // Still proceed with registration to show ID cards
+    //       onRegistrationComplete(registrationData);
+    //     }
+    //   }, 5000);
       
     } catch (error) {
       console.error("Registration error:", error);
@@ -263,7 +288,7 @@ const RegistrationForm = ({ onRegistrationComplete }: { onRegistrationComplete: 
       });
       
       // Still proceed with registration to show ID cards
-      onRegistrationComplete(registrationData);
+      // onRegistrationComplete(registrationData);
     } finally {
       setIsSubmitting(false);
     }

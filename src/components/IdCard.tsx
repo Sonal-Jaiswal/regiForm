@@ -20,7 +20,7 @@ const IdCard: React.FC<IdCardProps> = ({ member, teamName }) => {
     } else {
       // For 'other' gender
       return '';
-    }
+    } 
   };
 
   return (
