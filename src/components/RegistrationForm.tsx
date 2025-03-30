@@ -116,6 +116,15 @@ const RegistrationForm = ({ onRegistrationComplete }: { onRegistrationComplete: 
         });
         return false;
       }
+
+      if (!/^\d+$/.test(member.rollNo.trim())) {
+        toast({
+          title: "Invalid roll number",
+          description: `Roll number for ${member.fullName} must be a valid digit`,
+          variant: "destructive"
+        });
+        return false;
+      }
       
       if (!member.email.trim() || !member.email.includes('@')) {
         toast({
