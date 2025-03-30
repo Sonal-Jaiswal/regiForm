@@ -19,7 +19,7 @@ const IdCard: React.FC<IdCardProps> = ({ member, teamName }) => {
       return '/lovable-uploads/2b2d6e50-4ce6-49d6-ad8d-c5391fdbdd64.png';
     } else {
       // For 'other' gender
-      return '/lovable-uploads/d9f88e6a-8984-4fa5-afd1-6e22eaf1c01c.png'; // This is a placeholder for 404 image
+      return '/lovable-uploads/d9f88e6a-8984-4fa5-afd1-6e22eaf1c01c.png';
     }
   };
 
