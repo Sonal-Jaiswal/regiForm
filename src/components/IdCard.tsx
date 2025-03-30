@@ -14,9 +14,9 @@ const IdCard: React.FC<IdCardProps> = ({ member, teamName }) => {
   // Select the appropriate spider image based on gender
   const getCharacterImage = () => {
     if (member.gender === 'female') {
-      return 'spidergirl.jpg';
+      return 'spidergirl.webp';
     } else if (member.gender === 'male') {
-      return 'spiderma.jpg';
+      return 'spiderma.webp';
     } else {
       // For 'other' gender
       return '';
