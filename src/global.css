@@ -1,0 +1,38 @@
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .card-glow, .animate-pulse-glow {
+    box-shadow: none !important;
+    animation: none !important;
+  }
+  
+  .trapped-glow {
+    text-shadow: none !important;
+  }
+  
+  button, .print\:hidden {
+    display: none !important;
+  }
+  
+  .min-h-screen {
+    min-height: auto !important;
+  }
+  
+  .space-y-8 {
+    margin-top: 0 !important;
+  }
+  
+  .print\:gap-4 {
+    gap: 1rem !important;
+  }
+  
+  @page {
+    margin: 0.5cm;
+  }
+}
